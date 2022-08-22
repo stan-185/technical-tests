@@ -1,4 +1,3 @@
-from asyncio.format_helpers import _format_callback_source
 from random import shuffle
 
 LETTER_SCORES =  {'A' : 1, 'E' : 1, 'I' : 1, 'O' : 1, 'N' : 1,'R' : 1, 'T' : 1, 'L' : 1, 'S' : 1, 'U' : 1, 'D' : 2, 'G' : 2, 'B' : 3, 'C' : 3, 'M' : 3, 'P' : 3, 'F' : 4, 'H' : 4, 'V' : 4, 'W' : 4, 'Y' : 4, 'K': 5, 'J': 8, 'X':8, 'Q':10,'Z':10}
@@ -45,9 +44,10 @@ def find_valid_words(rack,dictionary_list):
             continue
 
         for letter in word:
+            upper_letter = letter.upper()
 
-            if letter in rack_copy:
-                rack_copy.remove(letter)
+            if upper_letter in rack_copy:
+                rack_copy.remove(upper_letter)
             else:
                 is_valid = False
                 break
@@ -56,6 +56,21 @@ def find_valid_words(rack,dictionary_list):
             valid_words.append(word)
     
     return valid_words
+
+def longest_word(valid_words):
+
+    if len(valid_words) == 0:
+        return
+    elif len(valid_words) == 1:
+        return valid_words[0]
+
+    longest_word = valid_words[0]
+
+    for word in valid_words[1:]:
+        if len(word) > len(longest_word):
+            longest_word = word
+    
+    return longest_word
 
 
 
@@ -74,9 +89,11 @@ if __name__ == "__main__":
     
     dictionary_list = load_dictionary()
 
-    rack = ['j','a','m','f']
-    valid_words = find_valid_words(rack,dictionary_list)
+    print(player_rack)
+    valid_words = find_valid_words(player_rack,dictionary_list)
     print(valid_words)
+    print(longest_word(valid_words))
+
 
    
 
