@@ -1,3 +1,4 @@
+from asyncio.format_helpers import _format_callback_source
 from random import shuffle
 
 LETTER_SCORES =  {'A' : 1, 'E' : 1, 'I' : 1, 'O' : 1, 'N' : 1,'R' : 1, 'T' : 1, 'L' : 1, 'S' : 1, 'U' : 1, 'D' : 2, 'G' : 2, 'B' : 3, 'C' : 3, 'M' : 3, 'P' : 3, 'F' : 4, 'H' : 4, 'V' : 4, 'W' : 4, 'Y' : 4, 'K': 5, 'J': 8, 'X':8, 'Q':10,'Z':10}
@@ -27,7 +28,34 @@ def create_shuffled_bag():
     shuffle(bag)
     return bag
 
+def load_dictionary():
+    data = open('dictionary.txt','r')
+    dictionary = data.read()
+    dictionary_list = dictionary.split('\n')
+    return dictionary_list
 
+def find_valid_words(rack,dictionary_list):
+
+    valid_words = []
+
+    for word in dictionary_list:
+        rack_copy = rack.copy()
+        is_valid = True
+        if len(word) >= len(rack) or word == '':
+            continue
+
+        for letter in word:
+
+            if letter in rack_copy:
+                rack_copy.remove(letter)
+            else:
+                is_valid = False
+                break
+        
+        if is_valid:
+            valid_words.append(word)
+    
+    return valid_words
 
 
 
@@ -39,11 +67,16 @@ def create_shuffled_bag():
 if __name__ == "__main__":
 
     player_rack = []
-
-    print(calculate_word_score('Guardian'))
     
     assign_tiles(player_rack)
 
     bag = create_shuffled_bag()
-    print(bag)
+    
+    dictionary_list = load_dictionary()
+
+    rack = ['j','a','m','f']
+    valid_words = find_valid_words(rack,dictionary_list)
+    print(valid_words)
+
+   
 
