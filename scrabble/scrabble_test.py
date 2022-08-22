@@ -72,6 +72,18 @@ def longest_word(valid_words):
     
     return longest_word
 
+def find_highest_scoring_word(valid_words):
+    word_scores = {}
+    for word in valid_words:
+        word_scores[word] = calculate_word_score(word)
+    
+    print(word_scores)
+    max_score = max(word_scores.values())
+    print(max_score)
+    print(word_scores[index(max_score)])
+
+    
+
 
 
 
@@ -93,6 +105,7 @@ if __name__ == "__main__":
     valid_words = find_valid_words(player_rack,dictionary_list)
     print(valid_words)
     print(longest_word(valid_words))
+    find_highest_scoring_word(valid_words)
 
 
    
